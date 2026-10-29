@@ -594,24 +594,28 @@ async function drawEnd(){
   g.fillStyle = "#ffffff"; g.font = "800 36px "+cond; g.textBaseline = "alphabetic"; g.fillText("CRAZY88 · EFTELING", 60, 96);
   g.fillStyle = "#f2384a"; g.textAlign = "right"; g.fillText("EINDSCORE", W-60, 96); g.textAlign = "left";
   if ("letterSpacing" in g) g.letterSpacing = "0px";
-  const score = scoreOf(), done = tasks.filter(x=>state.done[x.id]).length, rk = rankOf(score)[1];
+  const proven = tasks.filter(x=>state.proof[x.id]);
+  const score = proven.reduce((a,x)=>a+x.p,0), done = proven.length, rk = rankOf(score)[1];
+  const noProof = tasks.filter(x=>state.done[x.id] && !state.proof[x.id]).length;
   g.fillStyle = "#8b95a5"; g.font = "500 32px "+body; g.fillText("Team", 60, 650);
   g.fillStyle = "#e8ecf1"; g.font = "800 92px "+cond; g.fillText((state.team.trim() || "Ons team").toUpperCase(), 60, 742, W-120);
   g.fillStyle = "#f2384a"; g.font = "800 260px "+cond; g.fillText(String(score), 52, 975);
   const sw = g.measureText(String(score)).width;
   g.fillStyle = "#8b95a5"; g.font = "800 44px "+cond; g.fillText("PUNTEN", 52+sw+22, 975);
   g.fillStyle = "#e8ecf1"; g.font = "700 38px "+body; g.fillText("Rang: "+rk, 60, 1045);
-  g.fillStyle = "#8b95a5"; g.font = "500 34px "+body; g.textAlign = "right"; g.fillText(done+" van "+tasks.length+" opdrachten", W-60, 1045); g.textAlign = "left";
+  g.fillStyle = "#8b95a5"; g.font = "500 34px "+body; g.textAlign = "right"; g.fillText(done+" opdrachten met bewijs", W-60, 1045); g.textAlign = "left";
   g.fillStyle = "#262c36"; g.fillRect(60, 1080, W-120, 2);
   CATS.forEach(([name],ci)=>{
-    const ct = tasks.filter(x=>x.cat===ci), got = ct.filter(x=>state.done[x.id]).reduce((a,x)=>a+x.p,0), tot = ct.reduce((a,x)=>a+x.p,0);
+    const ct = tasks.filter(x=>x.cat===ci), got = ct.filter(x=>state.proof[x.id]).reduce((a,x)=>a+x.p,0), tot = ct.reduce((a,x)=>a+x.p,0);
     const y = 1136 + ci*46;
     g.fillStyle = "#e8ecf1"; g.font = "500 30px "+body; g.fillText(name, 60, y, 400);
     g.fillStyle = "#171c24"; rr(g, 490, y-16, W-490-220, 12, 6); g.fill();
     if (got){ g.fillStyle = "#f2384a"; rr(g, 490, y-16, Math.max(12,(W-490-220)*got/tot), 12, 6); g.fill(); }
     g.fillStyle = got===tot ? "#f2384a" : "#8b95a5"; g.font = "800 32px "+cond; g.textAlign = "right"; g.fillText(got+" / "+tot, W-60, y); g.textAlign = "left";
   });
-  g.fillStyle = "#5b6575"; g.font = "500 28px "+body; g.fillText("Exclusief jurybonussen", 60, 1430);
+  g.fillStyle = "#5b6575"; g.font = "500 28px "+body;
+  g.fillText("Alleen opdrachten met bewijs, exclusief jurybonussen"+(noProof ? " · "+noProof+" zonder bewijs niet geteld" : ""), 60, 1430, W-120);
+  c._score = score;
   return c;
 }
 $("endBtn").addEventListener("click", async ()=>{
@@ -630,7 +634,7 @@ $("endShare").addEventListener("click",()=>{
   if (!endFile) return;
   let ok = false; try { ok = !!(navigator.canShare && navigator.canShare({files:[endFile]})); } catch(e){}
   if (ok && navigator.share){
-    navigator.share({files:[endFile], text:"Eindscore Crazy88 – team "+(state.team.trim()||"(geen naam)")+": "+scoreOf()+" punten"})
+    navigator.share({files:[endFile], text:"Eindscore Crazy88 – team "+(state.team.trim()||"(geen naam)")+": "+tasks.filter(x=>state.proof[x.id]).reduce((a,x)=>a+x.p,0)+" punten met bewijs"})
       .then(()=>toast("Eindscore gedeeld")).catch(err=>{ if (!err || err.name !== "AbortError") toast("Delen lukte niet. Houd de afbeelding ingedrukt."); });
   } else toast("Houd de afbeelding ingedrukt om te bewaren");
 });
