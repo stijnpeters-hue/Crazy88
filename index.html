@@ -14,7 +14,7 @@
 /* Scorebord: donker, neongroen accent, groot scoregetal. Bewust één donker thema. */
 :root{
   --bg:#0e1116; --panel:#171c24; --line:#262c36; --box:#3a4250;
-  --ink:#e8ecf1; --muted:#8b95a5; --dim:#5b6575; --lime:#ff5a36; --danger:#ff6b5b;
+  --ink:#e8ecf1; --muted:#8b95a5; --dim:#5b6575; --lime:#f2384a; --danger:#ff6b5b;
   --cond:'Barlow Condensed','Arial Narrow',system-ui,sans-serif; --body:'Barlow',system-ui,-apple-system,sans-serif;
   color-scheme:dark;
 }
@@ -37,7 +37,7 @@ body{font-family:var(--body);font-size:16px;line-height:1.4;-webkit-text-size-ad
 .fab svg{width:20px;height:20px}
 .fab:focus-visible,.hero-edit:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .trow.flash{animation:flash 2.2s ease-out}
-@keyframes flash{0%,55%{background:rgba(255,90,54,.16)}100%{background:transparent}}
+@keyframes flash{0%,55%{background:rgba(242,56,74,.16)}100%{background:transparent}}
 .what-cat{margin:0;font-family:var(--cond);font-weight:800;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--lime)}
 .what-text{margin:0;font-size:20px;line-height:1.3;font-weight:700}
 .what-pts{font-family:var(--cond);font-weight:800;font-size:22px;color:var(--lime)}
@@ -94,7 +94,7 @@ main{display:grid;gap:26px;padding-top:20px;padding-bottom:28px}
 .task{flex:1;min-width:0;display:flex;gap:14px;align-items:center;padding:13px 0;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
 .cam{width:44px;height:44px;flex-shrink:0;border-radius:10px;border:1.5px solid var(--line);background:transparent;color:var(--muted);display:grid;place-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .cam svg{width:20px;height:20px}
-.cam.sent{border-color:var(--lime);color:var(--lime);background:rgba(255,90,54,.08)}
+.cam.sent{border-color:var(--lime);color:var(--lime);background:rgba(242,56,74,.08)}
 .cam:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
 .proof{display:block;font-size:12px;font-weight:700;color:var(--lime);margin-top:3px}
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:30}
@@ -209,10 +209,10 @@ main{padding-bottom:96px!important}
 <input type="file" id="fileIn" accept="image/*,video/*" hidden>
 <input type="file" id="photoIn" accept="image/*" hidden>
 
-<button type="button" class="fab" id="whatBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1.2" fill="currentColor"/><circle cx="15" cy="15" r="1.2" fill="currentColor"/><circle cx="15" cy="9" r="1.2" fill="currentColor"/><circle cx="9" cy="15" r="1.2" fill="currentColor"/></svg>Wat nu?</button>
+<button type="button" class="fab" id="whatBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1.2" fill="currentColor"/><circle cx="15" cy="15" r="1.2" fill="currentColor"/><circle cx="15" cy="9" r="1.2" fill="currentColor"/><circle cx="9" cy="15" r="1.2" fill="currentColor"/></svg>Random opdracht</button>
 
 <div class="sheet" id="whatSheet" role="dialog" aria-modal="true" aria-labelledby="whatTitle" hidden>
-  <h3 id="whatTitle">Wat nu?</h3>
+  <h3 id="whatTitle">Random opdracht</h3>
   <p class="what-cat" id="whatCat"></p>
   <p class="what-text" id="whatText"></p>
   <span class="what-pts" id="whatPts"></span>
@@ -339,7 +339,7 @@ const fx = document.getElementById("fx"), ctx = fx.getContext("2d");
 let parts = [], fxRun = false;
 function sizeFx(){ const d = devicePixelRatio || 1; fx.width = innerWidth*d; fx.height = innerHeight*d; ctx.setTransform(d,0,0,d,0,0); }
 sizeFx(); addEventListener("resize", sizeFx);
-const COLORS = ["#ff5a36","#ff5a36","#ffffff","#ff7a1a","#8b95a5"];
+const COLORS = ["#f2384a","#f2384a","#ffffff","#ff9aa4","#8b95a5"];
 function confetti(x, y, n, spread){
   if (calm) return;
   for (let i=0;i<n;i++){
@@ -592,12 +592,12 @@ async function drawEnd(){
   g.fillStyle = gr; g.fillRect(0,0,W,PH+2);
   if ("letterSpacing" in g) g.letterSpacing = "6px";
   g.fillStyle = "#ffffff"; g.font = "800 36px "+cond; g.textBaseline = "alphabetic"; g.fillText("CRAZY88 · EFTELING", 60, 96);
-  g.fillStyle = "#ff5a36"; g.textAlign = "right"; g.fillText("EINDSCORE", W-60, 96); g.textAlign = "left";
+  g.fillStyle = "#f2384a"; g.textAlign = "right"; g.fillText("EINDSCORE", W-60, 96); g.textAlign = "left";
   if ("letterSpacing" in g) g.letterSpacing = "0px";
   const score = scoreOf(), done = tasks.filter(x=>state.done[x.id]).length, rk = rankOf(score)[1];
   g.fillStyle = "#8b95a5"; g.font = "500 32px "+body; g.fillText("Team", 60, 650);
   g.fillStyle = "#e8ecf1"; g.font = "800 92px "+cond; g.fillText((state.team.trim() || "Ons team").toUpperCase(), 60, 742, W-120);
-  g.fillStyle = "#ff5a36"; g.font = "800 260px "+cond; g.fillText(String(score), 52, 975);
+  g.fillStyle = "#f2384a"; g.font = "800 260px "+cond; g.fillText(String(score), 52, 975);
   const sw = g.measureText(String(score)).width;
   g.fillStyle = "#8b95a5"; g.font = "800 44px "+cond; g.fillText("PUNTEN", 52+sw+22, 975);
   g.fillStyle = "#e8ecf1"; g.font = "700 38px "+body; g.fillText("Rang: "+rk, 60, 1045);
@@ -608,8 +608,8 @@ async function drawEnd(){
     const y = 1136 + ci*46;
     g.fillStyle = "#e8ecf1"; g.font = "500 30px "+body; g.fillText(name, 60, y, 400);
     g.fillStyle = "#171c24"; rr(g, 490, y-16, W-490-220, 12, 6); g.fill();
-    if (got){ g.fillStyle = "#ff5a36"; rr(g, 490, y-16, Math.max(12,(W-490-220)*got/tot), 12, 6); g.fill(); }
-    g.fillStyle = got===tot ? "#ff5a36" : "#8b95a5"; g.font = "800 32px "+cond; g.textAlign = "right"; g.fillText(got+" / "+tot, W-60, y); g.textAlign = "left";
+    if (got){ g.fillStyle = "#f2384a"; rr(g, 490, y-16, Math.max(12,(W-490-220)*got/tot), 12, 6); g.fill(); }
+    g.fillStyle = got===tot ? "#f2384a" : "#8b95a5"; g.font = "800 32px "+cond; g.textAlign = "right"; g.fillText(got+" / "+tot, W-60, y); g.textAlign = "left";
   });
   g.fillStyle = "#5b6575"; g.font = "500 28px "+body; g.fillText("Exclusief jurybonussen", 60, 1430);
   return c;
