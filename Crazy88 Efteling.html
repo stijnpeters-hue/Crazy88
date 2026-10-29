@@ -1,0 +1,303 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Crazy88 Efteling</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@700;800&family=Alegreya+Sans:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: sticky scorebalk bovenaan, daaronder opdrachten per rijk als grote tikbare rijen — gemaakt voor één hand op een iPhone */
+:root{
+  --bg:#f3f1e8; --surface:#fffdf6; --ink:#1f2a22; --muted:#5f6b60; --line:#dcd8c6;
+  --forest:#1e5a3c; --gold:#b8860b; --gold-soft:#f4e6b8; --done:#e7f0e6; --danger:#a63a2b;
+  --display:"Alegreya SC", Georgia, serif; --body:"Alegreya Sans", -apple-system, system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121a15; --surface:#1a241e; --ink:#ece8d8; --muted:#a3ad9f; --line:#2c3a31;
+  --forest:#7fc79c; --gold:#e3b84a; --gold-soft:#3a3320; --done:#1d3326; --danger:#e07a6a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121a15; --surface:#1a241e; --ink:#ece8d8; --muted:#a3ad9f; --line:#2c3a31;
+  --forest:#7fc79c; --gold:#e3b84a; --gold-soft:#3a3320; --done:#1d3326; --danger:#e07a6a; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.4;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--forest)}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--forest);color:#fffdf6}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header.bar{color:#121a15}}
+:root[data-theme="dark"] header.bar{color:#121a15}
+header .wrap{padding-block:12px 14px;display:grid;gap:8px}
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+h1{font-family:var(--display);font-size:1.45rem;margin:0;letter-spacing:.02em;text-wrap:balance}
+.score{font-family:var(--display);font-size:2rem;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.score small{font-family:var(--body);font-size:.8rem;font-weight:500;opacity:.85}
+.meter{height:8px;border-radius:99px;background:color-mix(in srgb,currentColor 22%,transparent);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--gold);border-radius:99px;transition:width .3s}
+.sub{display:flex;justify-content:space-between;font-size:.85rem;opacity:.9;font-variant-numeric:tabular-nums}
+
+main .wrap{padding-block:16px 40px;display:grid;gap:18px}
+.team{display:grid;gap:6px}
+.team label{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.team input{font:inherit;font-size:1.1rem;font-weight:700;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);width:100%}
+.team input:focus{outline:2px solid var(--gold);outline-offset:1px}
+
+.filters{display:flex;gap:8px}
+.filters button{flex:1;font:inherit;font-weight:700;font-size:.95rem;padding:10px 6px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+section.cat{display:grid;gap:8px}
+.cat-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:4px}
+.cat-head h2{font-family:var(--display);font-size:1.25rem;margin:0}
+.cat-head span{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.task{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:start;padding:13px 14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.task input{position:absolute;opacity:0;pointer-events:none}
+.box{width:30px;height:30px;border-radius:9px;border:2px solid var(--line);display:grid;place-items:center;background:var(--bg);transition:background .15s,border-color .15s}
+.box svg{width:18px;height:18px;opacity:0;transform:scale(.6);transition:all .15s}
+.txt{min-width:0;padding-top:3px}
+.pts{font-weight:800;font-variant-numeric:tabular-nums;background:var(--gold-soft);color:var(--ink);padding:4px 9px;border-radius:99px;font-size:.9rem;white-space:nowrap;margin-top:2px}
+.task.on{background:var(--done);border-color:transparent}
+.task.on .box{background:var(--forest);border-color:var(--forest)}
+.task.on .box svg{opacity:1;transform:none}
+.task.on .txt{color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--muted) 60%,transparent)}
+.task:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:2px}
+
+.bonus{background:var(--surface);border:1px dashed var(--gold);border-radius:12px;padding:14px;display:grid;gap:8px}
+.bonus h2{font-family:var(--display);font-size:1.15rem;margin:0}
+.bonus p{margin:0;color:var(--muted);font-size:.95rem}
+.bonus ul{margin:0;padding:0;list-style:none;display:grid;gap:4px}
+.bonus li{display:flex;justify-content:space-between;gap:10px;font-size:.95rem}
+.bonus li b{color:var(--gold);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.actions{display:grid;gap:10px}
+.btn{font:inherit;font-weight:800;font-size:1.05rem;padding:15px;border-radius:12px;border:0;background:var(--forest);color:var(--bg);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--danger);border:1.5px solid var(--line);font-weight:700;font-size:.95rem;padding:12px}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px;border-radius:12px;background:var(--surface);border:1.5px solid var(--danger)}
+.confirm span{flex:1 1 180px}
+.confirm button{font:inherit;font-weight:700;padding:10px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.confirm .yes{background:var(--danger);border-color:var(--danger);color:#fff}
+textarea#share{width:100%;min-height:150px;font:inherit;font-size:.9rem;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.note{font-size:.85rem;color:var(--muted);text-align:center;margin:0}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:700;font-size:.95rem;z-index:20}
+.empty{color:var(--muted);text-align:center;padding:10px 0;margin:0}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="top">
+      <h1 id="teamTitle">Crazy88 Efteling</h1>
+      <div class="score"><span id="score">0</span> <small>pnt</small></div>
+    </div>
+    <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+    <div class="sub"><span id="count">0 van 0 opdrachten</span><span id="max">max 0 pnt</span></div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="team">
+      <label for="teamName">Teamnaam</label>
+      <input id="teamName" type="text" placeholder="Bijv. De Gouden Ganzen" autocomplete="off" maxlength="40">
+    </div>
+
+    <div class="filters" role="group" aria-label="Toon opdrachten">
+      <button type="button" id="f-all" data-f="all" aria-pressed="true">Alles</button>
+      <button type="button" id="f-open" data-f="open" aria-pressed="false">Open</button>
+      <button type="button" id="f-done" data-f="done" aria-pressed="false">Gedaan</button>
+    </div>
+
+    <div id="list"></div>
+
+    <div class="bonus">
+      <h2>Jurybonussen</h2>
+      <p>Deelt de jury aan het eind uit, bovenop je score.</p>
+      <ul>
+        <li>Grappigste foto <b>+25</b></li>
+        <li>Beste video <b>+25</b></li>
+        <li>Meest originele opdrachtuitvoering <b>+25</b></li>
+        <li>Beste groepsfoto <b>+25</b></li>
+        <li>Grootste durfal van de dag <b>+25</b></li>
+        <li>Meeste interactie met bezoekers <b>+25</b></li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <button class="btn" type="button" id="shareBtn">Score kopiëren voor de jury</button>
+      <textarea id="share" readonly hidden aria-label="Scoreoverzicht"></textarea>
+      <button class="btn ghost" type="button" id="resetBtn">Alles wissen</button>
+      <div class="confirm" id="confirm" hidden>
+        <span>Alle vinkjes en de teamnaam wissen?</span>
+        <button type="button" id="no">Annuleer</button>
+        <button type="button" class="yes" id="yes">Wissen</button>
+      </div>
+      <p class="note">Je vinkjes blijven bewaard op deze telefoon.</p>
+    </div>
+  </div>
+</main>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const CATS = [
+ ["Sprookjesbos",[
+  ["Ga op de foto met een levende pauw",5],
+  ["Ga op de foto met een gekleurde duif",5],
+  ["Hans en Grietje: doe alsof je aan het snoephuisje likt",5],
+  ["Voer een serieus, filosofisch gesprek met de Trollenkoning en film zijn reactie (zijn gebrabbel)",10],
+  ["Maak een selfie met de Reus",5],
+  ["Loop met je team een rondje in het kabouterdorp als kabouters en zing 3x ‘he ho, he o, je krijgt het niet cadeau’",10],
+  ["Ga met het hele team als Doornroosje (slapend) 10 sec op de grond liggen voor haar kasteel",10],
+  ["Maak een foto alsof je de Gouden Ganzen probeert te stelen",10],
+  ["Laat iemand de boze heks uitbeelden",5],
+  ["Beeld een sprookjeshuwelijk uit",10],
+  ["Dans als een bezetene rond het huisje van Repelsteeltje terwijl je zijn liedje zingt",10],
+  ["Maak een foto waarop iemand gevangen lijkt in een sprookje",10],
+  ["Verzamel vijf verschillende sprookjesfiguren op één foto",15],
+  ["Zoek de grootste paddenstoel die je kunt vinden en maak een groepsfoto",5],
+  ["Dans met je groepje voor de Indische Waterlelies de Indische-waterleliedans",10],
+  ["Zing met je groepje “Roodkapje waar ga je henen” uit volle borst voor de wolf bij het huisje van grootmoeder",10],
+  ["Laat iedereen een andere emotie tonen bij het zien van de Draak",10],
+  ["Vind het oudste sprookje in het Sprookjesbos en maak er een foto bij",20]]],
+ ["Attracties & Durf",[
+  ["Ga in Joris en de Draak en zorg dat je wint",20],
+  ["Maak een actiefoto waarop iedereen exact dezelfde pose aanneemt",20],
+  ["Maak na de Python een foto van iemands extreme achtbaankapsel",15],
+  ["Maak een splashfoto bij De Vliegende Hollander waarbij iedereen droog probeert te kijken",20],
+  ["Knuffel de Kniesoorboom alsof het je beste vriend is",5],
+  ["Begin in een wachtrij een wave en zorg dat iedereen meedoet",15],
+  ["Maak een selfie met Edna de Draak terwijl deze rook of vuur spuwt",15],
+  ["Geef voor de Baron een motivatiespeech van 30 seconden",15],
+  ["Maak een perfecte timingfoto met een voorbijrazende achtbaan",20],
+  ["Wijs maximaal twee personen aan die samen in de Piraña moeten en maak direct na afloop een foto",15],
+  ["Zing een sfeerlied in een wachtrij (zoals bij de Baron) zodat de mensen om je heen gaan meeklappen",15],
+  ["Maak een dramatische Titanic-scène bij De Vliegende Hollander",15],
+  ["Geef een overwinningstoespraak na een attractie",15],
+  ["Maak een groepsfoto waarin iedereen een andere achtbaanemotie heeft",10],
+  ["Villa Volta: maak een video waarin iemands wereld op zijn kop staat",15],
+  ["Ren met je hele groepje zo snel mogelijk door het avonturendoolhof met timer",10]]],
+ ["Creatieve foto’s",[
+  ["Lange Jan: maak een groepsfoto waarop iedereen zijn nek zo lang mogelijk maakt als Langnek",10],
+  ["Houd met perspectief een gebouw vast",10],
+  ["Maak een selfie waarbij je neus de neus van de vis (Monstro) raakt",5],
+  ["Laat iemand zweven met een foto-illusie",10],
+  ["Maak een superheldenposter",15],
+  ["Maak een horrorfilmscène",15],
+  ["Maak een foto waarin iedereen dezelfde grappige houding heeft",10],
+  ["Maak een foto waarop iemand een boom knuffelt alsof het zijn beste vriend is",5],
+  ["Maak een foto waarop minimaal drie personen een standbeeld nadoen",10],
+  ["Maak een groepsfoto met zoveel mogelijk attractieborden",10],
+  ["Maak een foto waarbij één teamlid uit een sprookje lijkt te ontsnappen en de rest hem tegenhoudt",10]]],
+ ["Video’s",[
+  ["Maak een influencer-vlog van een attractie",15],
+  ["Maak een live nieuwsreportage vanuit de Efteling",15],
+  ["Interview een teamlid alsof hij een beroemd sprookjesfiguur is",15],
+  ["Geef een wedstrijdverslag van Joris en de Draak",15],
+  ["Laat iedereen zijn eigen achtbaangeluid doen",10],
+  ["Doe bij de Tuinman en de Fakir de fakir met zijn zwevende tapijt na",15],
+  ["Maak een video waarin een teamlid “Papier hier!” roept op exact dezelfde toonhoogte als Holle Bolle Gijs",10],
+  ["Sprookjesbos-speeddate: twee teamleden houden een romantische speeddate van 30 seconden met een sprookjesfiguur als onderwerp",15],
+  ["Laat een teamlid een nieuwe attractie pitchen aan de directie van de Efteling",20],
+  ["Maak een weerbericht vanuit Ruigrijk",15]]],
+ ["Bezoekers & medewerkers",[
+  ["Vraag drie bezoekers naar hun favoriete attractie",20],
+  ["Maak een foto met een gezin dat meedoet aan een gekke pose",20],
+  ["Maak een groepsfoto met een andere vriendengroep",15],
+  ["Laat een medewerker bepalen wie de grootste durfal is",20],
+  ["Zoek iemand die voor het eerst in de Efteling is en maak een foto samen",20]]],
+ ["Zoeken & bonus",[
+  ["Vang een munt bij de ezel en leg dit vast",20],
+  ["Maak met je groepje een rondje met de Efteling Stoomtrein",20],
+  ["Voorspel de wachttijd van een attractie binnen 5 minuten nauwkeurig",20],
+  ["Zoek drie verschillende kabouters en zet ze op één foto",15],
+  ["Zoek een attractie uit vier verschillende rijken en maak van elk een foto",20],
+  ["Zoek een attractie die begint met dezelfde letter als jullie teamnaam",15],
+  ["Ga met je groepje in de Gondoletta",20],
+  ["Maak een foto van het meest sprookjesachtige menu-item",15],
+  ["Zoek het meest verborgen plekje van de Efteling en maak daar een groepsfoto",25]]]
+];
+
+const KEY = "crazy88-efteling-v1";
+let state = { team:"", done:{} }, filter = "all";
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s === "object") state = { team:s.team||"", done:s.done||{} }; } catch(e){}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+
+const tasks = []; CATS.forEach(([c,items],ci)=>items.forEach(([t,p],ti)=>tasks.push({id:ci+"-"+ti,cat:ci,t,p})));
+const MAX = tasks.reduce((a,x)=>a+x.p,0);
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="#fffdf6" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+const list = document.getElementById("list");
+function render(){
+  list.innerHTML = "";
+  let any = false;
+  CATS.forEach(([name],ci)=>{
+    const ct = tasks.filter(x=>x.cat===ci);
+    const shown = ct.filter(x=> filter==="all" || (filter==="done") === !!state.done[x.id]);
+    if (!shown.length) return;
+    any = true;
+    const got = ct.filter(x=>state.done[x.id]).reduce((a,x)=>a+x.p,0);
+    const tot = ct.reduce((a,x)=>a+x.p,0);
+    const sec = document.createElement("section"); sec.className="cat";
+    const head = document.createElement("div"); head.className="cat-head";
+    const h = document.createElement("h2"); h.textContent = name;
+    const sp = document.createElement("span"); sp.textContent = got+" / "+tot+" pnt";
+    head.append(h,sp); sec.append(head);
+    shown.forEach(x=>{
+      const lab = document.createElement("label"); lab.className = "task"+(state.done[x.id]?" on":"");
+      const inp = document.createElement("input"); inp.type="checkbox"; inp.id="t-"+x.id; inp.checked=!!state.done[x.id];
+      inp.addEventListener("change",()=>{ if(inp.checked) state.done[x.id]=1; else delete state.done[x.id]; save(); render(); });
+      const box = document.createElement("span"); box.className="box"; box.innerHTML=CHECK;
+      const tx = document.createElement("span"); tx.className="txt"; tx.textContent=x.t;
+      const pt = document.createElement("span"); pt.className="pts"; pt.textContent=x.p;
+      lab.append(inp,box,tx,pt); sec.append(lab);
+    });
+    list.append(sec);
+  });
+  if (!any){ const p=document.createElement("p"); p.className="empty"; p.textContent = filter==="done" ? "Nog niets afgevinkt. Op naar de eerste opdracht!" : "Alles gedaan. Knap werk!"; list.append(p); }
+  const doneT = tasks.filter(x=>state.done[x.id]);
+  const score = doneT.reduce((a,x)=>a+x.p,0);
+  document.getElementById("score").textContent = score;
+  document.getElementById("count").textContent = doneT.length+" van "+tasks.length+" opdrachten";
+  document.getElementById("max").textContent = "max "+MAX+" pnt";
+  document.getElementById("meter").style.width = (score/MAX*100)+"%";
+  document.getElementById("teamTitle").textContent = state.team.trim() || "Crazy88 Efteling";
+}
+
+const teamIn = document.getElementById("teamName");
+teamIn.value = state.team;
+teamIn.addEventListener("input",()=>{ state.team = teamIn.value; save(); document.getElementById("teamTitle").textContent = state.team.trim() || "Crazy88 Efteling"; });
+
+document.querySelectorAll(".filters button").forEach(b=>b.addEventListener("click",()=>{
+  filter = b.dataset.f;
+  document.querySelectorAll(".filters button").forEach(x=>x.setAttribute("aria-pressed", x===b));
+  render();
+}));
+
+function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,2200); }
+
+document.getElementById("shareBtn").addEventListener("click",()=>{
+  const doneT = tasks.filter(x=>state.done[x.id]);
+  const score = doneT.reduce((a,x)=>a+x.p,0);
+  let txt = "Crazy88 Efteling – team "+(state.team.trim()||"(geen naam)")+"\nScore: "+score+" punten ("+doneT.length+" van "+tasks.length+" opdrachten)\n";
+  CATS.forEach(([name],ci)=>{
+    const d = doneT.filter(x=>x.cat===ci); if(!d.length) return;
+    txt += "\n"+name+"\n"+d.map(x=>"✓ "+x.t+" ("+x.p+")").join("\n")+"\n";
+  });
+  const ta = document.getElementById("share"); ta.value = txt;
+  const fallback = ()=>{ ta.hidden=false; ta.focus(); ta.setSelectionRange(0, ta.value.length); toast("Selecteer en kopieer de tekst hieronder"); };
+  try {
+    navigator.clipboard.writeText(txt).then(()=>toast("Gekopieerd. Plak het in de groepsapp."), fallback);
+  } catch(e){ fallback(); }
+});
+
+const conf = document.getElementById("confirm");
+document.getElementById("resetBtn").addEventListener("click",()=>{ conf.hidden=false; });
+document.getElementById("no").addEventListener("click",()=>{ conf.hidden=true; });
+document.getElementById("yes").addEventListener("click",()=>{
+  state = { team:"", done:{} }; teamIn.value=""; save(); conf.hidden=true;
+  document.getElementById("share").hidden = true; render(); toast("Gewist");
+});
+
+render();
+</script>
+
+</body></html>
